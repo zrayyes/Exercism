@@ -1,15 +1,25 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package acronym should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
 package acronym
 
-// Abbreviate should have a comment documenting it.
+import (
+	"strings"
+	"unicode"
+)
+
 func Abbreviate(s string) string {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	return ""
+	output := ""
+	next := true
+
+	// Loop over runes
+	for idx, letter := range s {
+		if next && unicode.IsLetter(letter) {
+			output += strings.ToUpper(string(s[idx]))
+			next = false
+
+			// Skip over space, punctuation, and '
+		} else if unicode.IsSpace(letter) || unicode.IsPunct(letter) && letter != 39 {
+			next = true
+		}
+	}
+
+	return output
 }
